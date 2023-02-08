@@ -14,7 +14,6 @@ function App() {
     const newColors = colorValues.all(10);
     newColors.pop();
     setShades(newColors);
-    console.log(newColors);
   };
   useEffect(() => {
     onChange({'hex': '#ccc'});
@@ -33,10 +32,10 @@ function App() {
         <ul className="shades-list">
           {shades.map((shade) => {
             return (
-              <CopyToClipboard className="color-code" text={"#" + shade.hex}>
+              <CopyToClipboard className="color-code" text={'#' + shade.hex}>
                 <li
                   style={{
-                    backgroundColor: "#" + shade.hex,
+                    backgroundColor: '#' + shade.hex,
                     color: shade.type === "shade" ? "white" : "black",
                   }}
                 >
