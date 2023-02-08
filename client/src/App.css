@@ -7,7 +7,7 @@
 }
 
 .shades{
-    height: calc(100%-rem);
+    height: calc(100% - 5rem);
 }
 
 .heading{

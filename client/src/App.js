@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Values from "values.js";
 import ChromeColor from "@uiw/react-color-chrome";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -7,6 +7,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 function App() {
   const [color, setColor] = useState("#ccc");
   const [shades, setShades] = useState([]);
+  const [showPicker, setShowPicker] = useState(false);
   const onChange = (color) => {
     setColor(color.hex);
     const colorValues = new Values(color.hex);
@@ -15,18 +16,30 @@ function App() {
     setShades(newColors);
     console.log(newColors);
   };
+  useEffect(() => {
+    onChange({'hex': '#ccc'});
+  }, [])
+  
   return (
     <div className="wrapper">
-      <h1 className="heading">Shades Generator ({color})</h1>
+      <h1 className="heading">
+        Shades Generator{" "}
+        <span onClick={() => setShowPicker(!showPicker)}>({color})</span>{" "}
+      </h1>
       <div className="color-picker">
-        <ChromeColor color={color} onChange={onChange} />
+        {showPicker && <ChromeColor color={color} onChange={onChange} />}
       </div>
       <div className="shades">
         <ul className="shades-list">
           {shades.map((shade) => {
             return (
-              <CopyToClipboard text={'#'+shade.hex}>
-                <li style={{ backgroundColor: "#" + shade.hex }}>
+              <CopyToClipboard className="color-code" text={"#" + shade.hex}>
+                <li
+                  style={{
+                    backgroundColor: "#" + shade.hex,
+                    color: shade.type === "shade" ? "white" : "black",
+                  }}
+                >
                   #{shade.hex}
                 </li>
               </CopyToClipboard>
